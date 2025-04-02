@@ -3,6 +3,7 @@ import { useState } from 'react';
 import GameView from './components/GameView';
 import WelcomeView from './components/WelcomeView';
 import RockPaperScissors from './rps';
+import React from 'react';
 
 function App() {
   const [userName, setUserName] = useState("");

@@ -1,3 +1,4 @@
+import React from 'react';
 export class RockPaperScissors {
   constructor(username) {
     this.username = username;
