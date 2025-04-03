@@ -10,6 +10,7 @@ const Navigation = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/rps">Rock Paper Scissors</Link></li>
         <li><Link to="/tic-tac-toe">Tic Tac Toe</Link></li>
+        <li><Link to="/wordle">Wordle</Link></li>
       </ul>
     </nav>
   );
