@@ -1,8 +1,10 @@
 import React from "react";
+import './pages/TicTacToe/TicTacToe.css';
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RockPaperScissors from "./pages/rps/rps/App";
-import TicTacToe from "./pages/TicTacToe/App";
+import TicTacToe from "./pages/TicTacToe/TicTacToe";
+
 import HomePage from "./HomePage";
 import Wordle from "./pages/Wordle/App";
 import Navigation from "./components/Navigation";
