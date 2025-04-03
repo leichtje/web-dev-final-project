@@ -1,11 +1,11 @@
-import './App.css';
+import './RPS.css';
 import { useState } from 'react';
 import GameView from './components/GameView';
 import WelcomeView from './components/WelcomeView';
-import RockPaperScissors from './rps';
+import RockPaperScissors from './components/rps';
 import React from 'react';
 
-function App() {
+function RPS() {
   const [userName, setUserName] = useState("");
   const [gameStarted, setGameStarted] = useState(false);
   const [userScore, setUserScore] = useState(0);
@@ -53,7 +53,7 @@ function App() {
   );
 }
 
-export default App;
+export default RPS;
 
 
 

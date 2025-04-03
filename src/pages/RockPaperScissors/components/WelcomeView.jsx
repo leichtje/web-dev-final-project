@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import React from "react";
 
 const WelcomeView = ({ handleStartGame, userName, userScore, cpuScore }) => {
   const [localUserName, setLocalUserName] = useState("");
