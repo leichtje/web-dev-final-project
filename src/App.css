@@ -20,7 +20,7 @@ nav {
   display: flex;
 }
 
-li {
+.navigation-list li {
   display: flex; 
   list-style: none; 
   gap: 15px; 
