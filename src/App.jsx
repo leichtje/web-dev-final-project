@@ -1,14 +1,18 @@
 import React from "react";
-import './pages/TicTacToe/TicTacToe.css';
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import RockPaperScissors from "./pages/rps/rps/App";
+import RPS from "./pages/RockPaperScissors/RPS";
 import TicTacToe from "./pages/TicTacToe/TicTacToe";
-
 import HomePage from "./HomePage";
 import Wordle from "./pages/Wordle/App";
 import Navigation from "./components/Navigation";
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> origin/main
 const App = () => {
   return (
     <BrowserRouter>
@@ -16,7 +20,7 @@ const App = () => {
       <div className="app-container">
         <Routes>
           <Route index element={<HomePage />} />
-          <Route path="/rps" element={<RockPaperScissors />} />
+          <Route path="/Rock-Paper-Scissors" element={<RPS/>} />
           <Route path="/tic-tac-toe" element={<TicTacToe />} />
           <Route path="/wordle" element={<Wordle />} />
         </Routes>

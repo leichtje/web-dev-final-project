@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import React from "react";
 
 const GameView = ({ userName, game, handleResetGame }) => {
   const [userChoice, setUserChoice] = useState("rock");
