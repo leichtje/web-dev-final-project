@@ -4,8 +4,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RockPaperScissors from "./pages/rps/rps/App";
 import TicTacToe from "./pages/TicTacToe/App";
 import HomePage from "./HomePage";
+import Wordle from "./pages/Wordle/App";
 import Navigation from "./components/Navigation";
-import Wordle from "./pages/wordle/App";
 
 const App = () => {
   return (
