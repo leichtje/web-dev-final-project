@@ -16,11 +16,7 @@ function Navigation() {
     }
   }, [username]);
   console.log("username", username);
-
-  // useEffect(() => {
-    
-  // }, []);
-
+  
   const handleLogout = () => {
     localStorage.removeItem("username");
     setUsername("");

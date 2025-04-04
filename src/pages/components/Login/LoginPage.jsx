@@ -10,6 +10,8 @@ export default function LoginPage() {
         if (username.trim().length > 0) {
             localStorage.setItem('username', username);
             navigate('/');
+            //Temporary fix to reload the page
+            window.location.reload();
         }else {
             alert("Please enter a username");
         }
