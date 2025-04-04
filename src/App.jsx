@@ -1,27 +1,21 @@
-import React from "react";
-import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import RPS from "./pages/RockPaperScissors/RPS";
-import TicTacToe from "./pages/TicTacToe/TicTacToe";
-import HomePage from "./HomePage";
-import Navigation from "./components/Navigation";
+import React from 'react'
+import { Outlet } from 'react-router';
+import './App.css'
+import Navigation from './pages/components/Navigation/Navigation'
+import Footer from './pages/components/Footer/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+function App() {
 
-
-
-const App = () => {
   return (
-    <BrowserRouter>
+    <div className='app-container'>
       <Navigation />
-      <div className="app-container">
-        <Routes>
-          <Route index element={<HomePage />} />
-          <Route path="/Rock-Paper-Scissors" element={<RPS/>} />
-          <Route path="/tic-tac-toe" element={<TicTacToe />} />
-        </Routes>
+      <div className='content-container container'>
+      <Outlet />
       </div>
-    </BrowserRouter>
-  );
-};
+      <Footer />
+    </div>
+  )
+}
 
 export default App;
