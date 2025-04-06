@@ -6,9 +6,6 @@ import TicTacToe from "./pages/TicTacToe/TicTacToe";
 import HomePage from "./HomePage";
 import Navigation from "./components/Navigation";
 
-
-
-
 const App = () => {
   return (
     <BrowserRouter>
