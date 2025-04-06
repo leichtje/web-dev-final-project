@@ -26,6 +26,7 @@ const Navigation = () => {
   return (
     <nav>
       <ul className="navigation-list">
+
         {!username ? (
           <li><Link to="/login">Login</Link></li>
         ) : (
@@ -33,7 +34,7 @@ const Navigation = () => {
             <li><Link to="/">Home</Link></li>
             <li><Link to="/Rock-Paper-Scissors">Rock Paper Scissors</Link></li>
             <li><Link to="/tic-tac-toe">Tic Tac Toe</Link></li>
-            <li>
+            <li><Link to="/wordle">Wordle</Link></li>
               <button onClick={handleLogout} className="logout-button">Logout</button>
             </li>
           </>
