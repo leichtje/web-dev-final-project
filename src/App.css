@@ -39,3 +39,10 @@ nav {
 .nav-item a:hover {
   color: #0078d7; 
 }
+
+.footer{
+  position: fixed; 
+  bottom: 20px; 
+  left: 50%; 
+  transform: translateX(-50%); 
+}

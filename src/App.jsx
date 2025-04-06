@@ -4,9 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import RPS from "./pages/RockPaperScissors/RPS";
 import TicTacToe from "./pages/TicTacToe/TicTacToe";
 import HomePage from "./HomePage";
+import Wordle from "./pages/Wordle/App";
 import Navigation from "./components/Navigation";
-
-
+import Footer from "./components/Footer";
+import LoginPage from "./pages/Login/LoginPage";
 
 
 const App = () => {
@@ -15,10 +16,15 @@ const App = () => {
       <Navigation />
       <div className="app-container">
         <Routes>
+          <Route path="/login" element={<LoginPage />} />
           <Route index element={<HomePage />} />
           <Route path="/Rock-Paper-Scissors" element={<RPS/>} />
           <Route path="/tic-tac-toe" element={<TicTacToe />} />
+          <Route path="/wordle" element={<Wordle />} />
         </Routes>
+      </div>
+      <div className="footer">
+        <Footer />
       </div>
     </BrowserRouter>
   );
