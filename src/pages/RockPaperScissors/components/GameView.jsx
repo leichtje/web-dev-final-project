@@ -1,35 +1,38 @@
-import { useState, useRef } from 'react';
 import React from "react";
+import { useState } from "react";
+import { RockPaperScissors } from "./rps";
+import "../RPS.css";
 
-const GameView = ({ userName, game, handleResetGame }) => {
-  const [userChoice, setUserChoice] = useState("rock");
-  const [userScore, setUserScore] = useState(0);
+const GameView = () => {
+  const userName = localStorage.getItem("username");
+  const [userChoice, setUserChoice] = useState("rock")
+  const [userScore, setUserScore] = useState(0)
   const [cpuScore, setCpuScore] = useState(0);
   const [gameHistory, setGameHistory] = useState([]);
-  
-  const scoreRef = useRef();
+  const [game] = useState(new RockPaperScissors(userName));
 
-  const handlePlay = () => {
-    const { result, score, logEntry } = game.play(userChoice);
+  const playGame = () => {
+    if (!userChoice) return;
+    
+    const cpuSelection = game.generateCPUResponse();
+    const result = game.determineWinner(userChoice, cpuSelection)
+    console.log(result)
+    if (result === `win`) {
+      setUserScore((prev) => prev + 1)
+    }
+    if (result === `lose`) {
+      setCpuScore((prev) => prev + 1)
+    }
 
-    setUserScore(score.user);
-    setCpuScore(score.cpu);
-    setGameHistory([...gameHistory, logEntry]);
-  };
-
-  const handleResetButtonClick = () => {
-    setUserChoice("");
-    setUserScore(0);
-    setCpuScore(0);
-    setGameHistory([]);
-    handleResetGame();
-  };
-
+    setGameHistory((prevHistory) => [
+      ...prevHistory,
+      ` ${userName} selected ${userChoice}. CPU selected ${cpuSelection}: ${userName} ${result}s`
+    ]);
+  }
   return (
-    <div id="game-screen">
-      <title>Rock Paper Scissors</title>
+    <div id="game-screen" style={{border: `1px solid black`}}>
       <div id="score-tally">
-        <p id="score" ref={scoreRef}>{userName}: {userScore} v CPU: {cpuScore}</p>
+        <p id="score"> {userName}: {userScore} v CPU: {cpuScore}</p>
       </div>
 
       <form id="game-form">
@@ -41,45 +44,43 @@ const GameView = ({ userName, game, handleResetGame }) => {
             name="user-selection"
             onChange={(e) => setUserChoice(e.target.value)}
           >
-            <option id="rock" value="rock">Rock</option>
-            <option id="paper" value="paper">Paper</option>
-            <option id="scissors" value="scissors">Scissors</option>
+            <option id="rock" value="rock" >
+              Rock
+            </option>
+            <option id="paper" value="paper">
+              Paper
+            </option>
+            <option id="scissors" value="scissors">
+              Scissors
+            </option>
           </select>
         </div>
-        <div className="btn-group">
-          <button className="btn btn-success" id="go-button" type="button" onClick={handlePlay}>
-            Play
-          </button>
-          <button className="btn btn-secondary" id="reset-game-button" type="button" onClick={handleResetButtonClick}>
-            Reset
-          </button>
-        </div>
+        <button 
+        className="btn btn-success" 
+        type="button" 
+        id="go-button"
+        onClick={playGame}>
+          Go!
+        </button>
       </form>
 
-      <div id="game-history">
-        <h3>Game History</h3>
-        <ul>
-          {gameHistory.map((entry, index) => (
-            <li key={index}>{entry}</li>
-          ))}
-        </ul>
-      </div>
+      <p id="game-history">
+        {gameHistory.map((entry, index) => (
+          <li key={index}>{entry}</li>
+        ))}
+      </p>
+      <button 
+      id="reset-game-button" 
+      className="btn btn-secondary"
+      onClick={() => {
+        setCpuScore(0);
+        setUserScore(0);
+        setGameHistory([]);
+      }}
+      >
+        Reset
+      </button>
     </div>
   );
-};
-
+  }
 export default GameView;
-
-
-
-
-
-
-
-
-
-
-
-
-
-

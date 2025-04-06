@@ -1,0 +1,16 @@
+.login-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 2rem;
+    border-radius: 8px;
+  }
+  
+  .login-container h1 {
+    margin-bottom: 20px;
+  }
+  
+  .login-container button {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
