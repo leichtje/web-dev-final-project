@@ -3,7 +3,7 @@ import './style.css';
 import React from 'react';
 
 const gameConfig = {
-  attempts: 5,
+  attempts: 6,
   wordLength: 5,
 };
 
@@ -36,42 +36,52 @@ const WordleGame = () => {
   const handleKeyDown = useCallback(
     async (event) => {
       const userInput = event.key.toUpperCase();
-
+      const currentRow = Math.floor(currentPosition / gameConfig.wordLength);
+      const currentCol = currentPosition % gameConfig.wordLength;
+  
       if (/^[A-Z]$/.test(userInput) && currentPosition < grid.length) {
-        const newGrid = [...grid];
-        newGrid[currentPosition] = userInput;
-        updateGrid(newGrid);
-        setCurrentPosition((pos) => pos + 1);
+        if (currentCol < gameConfig.wordLength) {
+          const newGrid = [...grid];
+          newGrid[currentPosition] = userInput;
+          updateGrid(newGrid);
+          setCurrentPosition((pos) => pos + 1);
+        }
       } else if (userInput === "BACKSPACE" && currentPosition > 0) {
-        const newGrid = [...grid];
-        newGrid[currentPosition - 1] = "";
-        updateGrid(newGrid);
-        setCurrentPosition((pos) => pos - 1);
+        const deletionRow = Math.floor((currentPosition - 1) / gameConfig.wordLength);
+        if (deletionRow === currentRow) {
+          const newGrid = [...grid];
+          newGrid[currentPosition - 1] = "";
+          updateGrid(newGrid);
+          setCurrentPosition((pos) => pos - 1);
+        }
       } else if (
         userInput === "ENTER" &&
-        (currentPosition % gameConfig.wordLength === 0 || currentPosition === grid.length)
+        currentCol === 0 && 
+        currentPosition > 0 
       ) {
         const start = currentPosition - gameConfig.wordLength;
         const currentWord = grid.slice(start, currentPosition).join("");
+        
         if (!(await isWordValid(currentWord))) {
           console.log("Invalid word");
           return;
         }
-
+      
         const results = checkWordLetters(currentWord);
         console.log(results);
-
+      
         if (currentWord === targetWord) {
           console.log("You won!");
           return;
         }
-
+      
         if (currentPosition < grid.length) {
-          setCurrentPosition((pos) => pos);
+          setCurrentPosition(currentPosition);
         } else {
           console.log("Game Over!");
         }
       }
+      
     },
     [grid, currentPosition, targetWord, updateGrid]
   );
@@ -102,25 +112,36 @@ const WordleGame = () => {
   return (
     <div className="wordle-container">
       <div id="wordle-grid">
-        {Array.from({ length: gameConfig.attempts }).map((_, rowIndex) => (
-          <div key={rowIndex} className="wordle-row">
-            {grid
-              .slice(rowIndex * gameConfig.wordLength, (rowIndex + 1) * gameConfig.wordLength)
-              .map((letter, colIndex) => (
+        {Array.from({ length: gameConfig.attempts }).map((_, rowIndex) => {
+          const rowStart = rowIndex * gameConfig.wordLength;
+          const rowEnd = rowStart + gameConfig.wordLength;
+          const rowLetters = grid.slice(rowStart, rowEnd);
+          const isSubmitted = currentPosition > rowEnd; // Row is submitted if current position is beyond it
+          const results = isSubmitted ? checkWordLetters(rowLetters.join("")) : [];
+          
+          return (
+            <div key={rowIndex} className="wordle-row">
+              {rowLetters.map((letter, colIndex) => (
                 <div
                   key={colIndex}
                   className={`letter ${
-                    checkWordLetters(grid.slice(rowIndex * gameConfig.wordLength, (rowIndex + 1) * gameConfig.wordLength).join(""))[colIndex]
+                    isSubmitted ? results[colIndex] : ""
                   }`}
                 >
                   {letter}
                 </div>
               ))}
-          </div>
-        ))}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
-};
-
-export default WordleGame;
+}
+export default function App() {
+  return (
+    <div className="App">
+      <WordleGame />
+    </div>
+  );
+}

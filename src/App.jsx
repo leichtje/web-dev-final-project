@@ -7,12 +7,6 @@ import HomePage from "./HomePage";
 import Wordle from "./pages/Wordle/App";
 import Navigation from "./components/Navigation";
 
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> origin/main
 const App = () => {
   return (
     <BrowserRouter>

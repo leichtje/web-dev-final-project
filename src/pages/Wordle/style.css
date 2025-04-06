@@ -33,9 +33,15 @@ header h1 {
 
 #wordle-grid {
   display: grid;
-  grid-template-columns: repeat(5, auto);
+  grid-template-rows: repeat(6, auto); 
   gap: 8px;
   margin: 20px 0;
+}
+
+.wordle-row {
+  display: grid;
+  grid-template-columns: repeat(6, auto);
+  gap: 8px;
 }
 
 #game {
