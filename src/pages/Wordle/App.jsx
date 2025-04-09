@@ -26,8 +26,6 @@ const WordleGame = () => {
         setTargetWord(data[0].toUpperCase());
       } catch (error) {
         console.error("Error fetching word:", error);
-        // Fallback word in case API fails
-        setTargetWord("REACT");
       }
     }
     fetchWord();
@@ -39,7 +37,7 @@ const WordleGame = () => {
 
   const handleKeyDown = useCallback(
     async (event) => {
-      if (gameOver) return; // Don't process input if game is over
+      if (gameOver) return; 
 
       const userInput = event.key.toUpperCase();
       const currentRow = Math.floor(currentPosition / gameConfig.wordLength);
@@ -64,7 +62,7 @@ const WordleGame = () => {
         }
       } else if (userInput === "ENTER") {
         const currentCol = currentPosition % gameConfig.wordLength;
-        if (currentCol === gameConfig.wordLength) { // Only check when row is full
+        if (currentCol === gameConfig.wordLength) { 
           const start = currentRow * gameConfig.wordLength;
           const currentWord = grid.slice(start, start + gameConfig.wordLength).join("");
           
@@ -81,12 +79,12 @@ const WordleGame = () => {
             return;
           }
         
-          // Check if this was the last attempt
+
           const isLastAttempt = currentRow === gameConfig.attempts - 1;
           if (isLastAttempt) {
             setGameOver(true);
           } else {
-            // Move to next row
+
             setCurrentPosition((currentRow + 1) * gameConfig.wordLength);
           }
         }
