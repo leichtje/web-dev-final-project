@@ -36,7 +36,6 @@ const Navigation = () => {
             <li><Link to="/tic-tac-toe">Tic Tac Toe</Link></li>
             <li><Link to="/wordle">Wordle</Link></li>
               <button onClick={handleLogout} className="logout-button">Logout</button>
-            </li>
           </>
         )}
       </ul>
