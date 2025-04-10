@@ -91,25 +91,37 @@ const App = () => {
 
   useEffect(() => {
     const handleKeyPress = (e) => {
+      if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+        e.preventDefault();
+      }
+  
       switch (e.key) {
         case 'ArrowUp':
-          setDirection('UP');
+          if (direction !== 'DOWN') setDirection('UP');
           break;
         case 'ArrowDown':
-          setDirection('DOWN');
+          if (direction !== 'UP') setDirection('DOWN');
           break;
         case 'ArrowLeft':
-          setDirection('LEFT');
+          if (direction !== 'RIGHT') setDirection('LEFT');
           break;
         case 'ArrowRight':
-          setDirection('RIGHT');
+          if (direction !== 'LEFT') setDirection('RIGHT');
           break;
         default:
           break;
       }
     };
-    document.addEventListener('keydown', handleKeyPress);
-  }, [])
+  
+    window.addEventListener('keydown', handleKeyPress);
+  
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [direction]);
+  
+
+
 
   return (
     <div className="snake-game">
