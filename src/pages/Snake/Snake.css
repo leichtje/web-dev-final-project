@@ -11,7 +11,7 @@
   .snake-game h1 {
     margin: auto;
     padding: 1rem;
-    font-size: 3rem;
+    font-size: 2rem;
     max-width: 600px;
     background-image: linear-gradient(to right, #AF40FF, #5B42F3 40%, #00DDEB);
     -webkit-background-clip: text;
@@ -22,9 +22,10 @@
     margin: auto;
     position: relative;
     width: 500px;
-    height: 500px;
+    height: 550px;
     border: 2px solid rgb(102, 51, 153);
     box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+    
   }
   
   .snake-game .row {

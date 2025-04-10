@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Snake.css';
 
-const ROWS = 13;
+const ROWS = 14;
 const COLS = 25;
 const INITIAL_SNAKE = [{ row: 12, col: 12 }];
 const INITIAL_DIRECTION = 'RIGHT';
