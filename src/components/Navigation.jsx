@@ -16,7 +16,7 @@ const Navigation = () => {
       setUsername("");
     }
   }, [storedUserName]);
-  console.log("username", username);
+
 
   const handleLogout = () => {
     localStorage.removeItem("username");
