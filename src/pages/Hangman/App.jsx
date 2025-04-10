@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./styles.css";
+import "./style.css";
 import Hangman from "./Hangman";
 
 class App extends Component {

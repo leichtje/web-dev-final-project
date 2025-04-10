@@ -1,64 +1,73 @@
 .Hangman {
-    width: 400px;
-    color: black;
-    text-align: center;
-    zoom: 1.3;
-  }
-  
-  .Hangman img {
-    border: 10px solid white;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.27),
+  width: 450px; 
+  color: black;
+  text-align: center;
+  zoom: 1.2;
+  padding: 20px;
+}
+
+.Hangman img {
+  border: 5px solid white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.27),
       0 0 40px rgba(0, 0, 0, 0.06) inset;
-  }
-  
-  .Hangman h1 {
-    font-size: 4rem;
-    font-weight: 100;
-    margin-bottom: 0.1em;
-    margin-top: 0;
-  }
-  
-  .Hangman-word {
-    letter-spacing: 1em;
-    margin: 0.4em -1em 0.2em 0;
-    font-size: 2rem;
-  }
-  
-  .Hangman-btns {
-    text-align: center;
-    display: inline-block;
-    width: 250px;
-    margin-top: 0;
-  }
-  
-  .Hangman button {
-    border: none;
-    font-family: inherit;
-    font-size: 1rem;
-    cursor: pointer;
-    width: 30px;
-    margin: 5px 2px 2px 2px;
-    letter-spacing: 1px;
-    outline: none;
-    background: #ffc107;
-    color: #fff;
-    box-shadow: 0 6px #ff9800;
-    border-radius: 5px;
-    padding-top: 4px;
-  }
-  
-  #reset {
-    width: 60px;
-    background-color: green;
-  }
-  
-  .Hangman button:hover {
-    background-color: #ff9800;
-  }
-  
-  .Hangman button:disabled {
-    background: #bdbdbd;
-    color: #eeeeee;
-    box-shadow: 0 6px #9e9e9e;
-  }
-  
+  max-width: 100%; 
+}
+
+.Hangman h1 {
+  font-size: 3rem;
+  font-weight: 100;
+  margin-bottom: 0.1em;
+  margin-top: 0;
+}
+
+.Hangman-word {
+  letter-spacing: 0.5em;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.Hangman-btns {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); 
+  gap: 5px;
+  justify-content: center;
+  width: auto;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.Hangman button {
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 40px; 
+  height: 40px;
+  margin: 5px;
+  background: #ffc107;
+  color: #fff;
+  box-shadow: 0 6px #ff9800;
+  border-radius: 5px;
+  text-align: center;
+}
+
+#reset {
+  width: 100px; /* Increased reset button size */
+  background-color: green;
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 8px;
+}
+
+.Hangman button:hover {
+  background-color: #ff9800;
+}
+
+.Hangman button:disabled {
+  background: #bdbdbd;
+  color: #eeeeee;
+  box-shadow: 0 6px #9e9e9e;
+}
