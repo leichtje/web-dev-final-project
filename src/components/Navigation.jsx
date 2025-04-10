@@ -16,7 +16,7 @@ const Navigation = () => {
       setUsername("");
     }
   }, [storedUserName]);
-  console.log("username", username);
+
 
   const handleLogout = () => {
     localStorage.removeItem("username");
@@ -35,8 +35,8 @@ const Navigation = () => {
             <li><Link to="/Rock-Paper-Scissors">Rock Paper Scissors</Link></li>
             <li><Link to="/tic-tac-toe">Tic Tac Toe</Link></li>
             <li><Link to="/wordle">Wordle</Link></li>
+            <li><Link to="/snake">Snake</Link></li>
               <button onClick={handleLogout} className="logout-button">Logout</button>
-            </li>
           </>
         )}
       </ul>
