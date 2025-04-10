@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import LoginPage from "./pages/Login/LoginPage";
 import Snake from "./pages/Snake/App";
+import Hangman from "./pages/Hangman/App";
 
 
 
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/tic-tac-toe" element={<TicTacToe />} />
           <Route path="/wordle" element={<Wordle />} />
           <Route path="/snake" element={<Snake />} />
+          <Route path="/hangman" element={<Hangman />} />
         </Routes>
       </div>
       <div className="footer">
