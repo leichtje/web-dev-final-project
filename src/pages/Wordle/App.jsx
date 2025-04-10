@@ -13,6 +13,8 @@ const WordleGame = () => {
   );
   const [targetWord, setTargetWord] = useState("");
   const [currentPosition, setCurrentPosition] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [gameWon, setGameWon] = useState(false);
 
   useEffect(() => {
     async function fetchWord() {
@@ -35,55 +37,60 @@ const WordleGame = () => {
 
   const handleKeyDown = useCallback(
     async (event) => {
+      if (gameOver) return; 
+
       const userInput = event.key.toUpperCase();
       const currentRow = Math.floor(currentPosition / gameConfig.wordLength);
       const currentCol = currentPosition % gameConfig.wordLength;
-  
-      if (/^[A-Z]$/.test(userInput) && currentPosition < grid.length) {
-        if (currentCol < gameConfig.wordLength) {
+
+      if (/^[A-Z]$/.test(userInput) ) {
+        if (currentCol < gameConfig.wordLength && currentPosition < grid.length) {
           const newGrid = [...grid];
           newGrid[currentPosition] = userInput;
           updateGrid(newGrid);
           setCurrentPosition((pos) => pos + 1);
         }
-      } else if (userInput === "BACKSPACE" && currentPosition > 0) {
-        const deletionRow = Math.floor((currentPosition - 1) / gameConfig.wordLength);
-        if (deletionRow === currentRow) {
-          const newGrid = [...grid];
-          newGrid[currentPosition - 1] = "";
-          updateGrid(newGrid);
-          setCurrentPosition((pos) => pos - 1);
+      } else if (userInput === "BACKSPACE") {
+        if (currentPosition > 0) {
+          const deletionRow = Math.floor((currentPosition - 1) / gameConfig.wordLength);
+          if (deletionRow === currentRow) {
+            const newGrid = [...grid];
+            newGrid[currentPosition - 1] = "";
+            updateGrid(newGrid);
+            setCurrentPosition((pos) => pos - 1);
+          }
         }
-      } else if (
-        userInput === "ENTER" &&
-        currentCol === 0 && 
-        currentPosition > 0 
-      ) {
-        const start = currentPosition - gameConfig.wordLength;
-        const currentWord = grid.slice(start, currentPosition).join("");
+      } else if (userInput === "ENTER") {
+        const currentCol = currentPosition % gameConfig.wordLength;
+        if (currentCol === gameConfig.wordLength) { 
+          const start = currentRow * gameConfig.wordLength;
+          const currentWord = grid.slice(start, start + gameConfig.wordLength).join("");
+          
+          if (currentWord.length !== gameConfig.wordLength) return;
+          
+          if (!(await isWordValid(currentWord))) {
+            alert("Not a valid word!");
+            return;
+          }
         
-        if (!(await isWordValid(currentWord))) {
-          console.log("Invalid word");
-          return;
-        }
-      
-        const results = checkWordLetters(currentWord);
-        console.log(results);
-      
-        if (currentWord === targetWord) {
-          console.log("You won!");
-          return;
-        }
-      
-        if (currentPosition < grid.length) {
-          setCurrentPosition(currentPosition);
-        } else {
-          console.log("Game Over!");
+          if (currentWord === targetWord) {
+            setGameWon(true);
+            setGameOver(true);
+            return;
+          }
+        
+
+          const isLastAttempt = currentRow === gameConfig.attempts - 1;
+          if (isLastAttempt) {
+            setGameOver(true);
+          } else {
+
+            setCurrentPosition((currentRow + 1) * gameConfig.wordLength);
+          }
         }
       }
-      
     },
-    [grid, currentPosition, targetWord, updateGrid]
+    [grid, currentPosition, targetWord, updateGrid, gameOver]
   );
 
   useEffect(() => {
@@ -111,12 +118,13 @@ const WordleGame = () => {
 
   return (
     <div className="wordle-container">
+      <h1>Wordle Game</h1>
       <div id="wordle-grid">
         {Array.from({ length: gameConfig.attempts }).map((_, rowIndex) => {
           const rowStart = rowIndex * gameConfig.wordLength;
           const rowEnd = rowStart + gameConfig.wordLength;
           const rowLetters = grid.slice(rowStart, rowEnd);
-          const isSubmitted = currentPosition > rowEnd; // Row is submitted if current position is beyond it
+          const isSubmitted = currentPosition > rowEnd;
           const results = isSubmitted ? checkWordLetters(rowLetters.join("")) : [];
           
           return (
@@ -135,9 +143,22 @@ const WordleGame = () => {
           );
         })}
       </div>
+      
+      {gameOver && !gameWon && (
+        <div className="game-over-message">
+          Game Over! The word was: <strong>{targetWord}</strong>
+        </div>
+      )}
+      
+      {gameWon && (
+        <div className="game-won-message">
+          Congratulations! You guessed the word correctly!
+        </div>
+      )}
     </div>
   );
 }
+
 export default function App() {
   return (
     <div className="App">
