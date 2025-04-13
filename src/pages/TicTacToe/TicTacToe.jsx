@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './TicTacToe.css';
 import React from 'react';
+import { useEffect } from 'react';
 
 function Square({ value, onSquareClick }) {
   return (
@@ -61,9 +62,17 @@ export default function Game() {
   const currentSquares = history[currentMove];
 
   function handlePlay(nextSquares) {
+    console.log("called")
     const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
+    console.log("nextSquares", nextSquares);
+    const board2D = [
+      nextSquares.slice(0, 3),
+      nextSquares.slice(3, 6),
+      nextSquares.slice(6, 9),
+    ];
+    console.log('Current Board State:', board2D);
   }
 
   function jumpTo(nextMove) {
