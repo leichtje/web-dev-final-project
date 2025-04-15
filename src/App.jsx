@@ -25,6 +25,7 @@ const App = () => {
           <Route path="/tic-tac-toe" element={<TicTacToe />} />
           <Route path="/wordle" element={<WordleGame />} />
           <Route path="/snake" element={<Snake />} />
+          <Route path="/hangman" element={<Hangman />} />
         </Routes>
       </div>
       <div className="footer">
