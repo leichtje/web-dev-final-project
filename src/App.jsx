@@ -10,6 +10,7 @@ import Footer from "./components/Footer";
 import LoginPage from "./pages/Login/LoginPage";
 import Snake from "./pages/Snake/Snake";
 import WordleGame from "./pages/Wordle/Wordle";
+import Hangman from "./pages/Hangman/App"
 
 
 
