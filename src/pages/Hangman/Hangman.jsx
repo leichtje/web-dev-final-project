@@ -87,29 +87,33 @@ class Hangman extends Component {
 
     return (
       <div className="Hangman">
-        <h1>Hangman</h1>
-        <img src={images[nWrong]} alt={alternateText} />
-        <p>Number Wrong: {nWrong}</p>
-
-        {answer === "" ? (
-          <p>Loading...</p>
-        ) : answer === this.guessedWord().join("") ? (
-          <p>You WIN!</p>
-        ) : nWrong === maxWrong ? (
-          <div>
-            <p>YOU LOSE</p>
-            <p>Correct Word is: {answer}</p>
+        <div className="Hangman-container">
+          <img src={images[nWrong]} alt={alternateText} />
+    
+          <div className="Hangman-right">
+            <p>Number Wrong: {nWrong}</p>
+    
+            {answer === "" ? (
+              <p>Loading...</p>
+            ) : answer === this.guessedWord().join("") ? (
+              <p>You WIN!</p>
+            ) : nWrong === maxWrong ? (
+              <div>
+                <p>YOU LOSE</p>
+                <p>Correct Word is: {answer}</p>
+              </div>
+            ) : (
+              <div>
+                <p className="Hangman-word">{this.guessedWord()}</p>
+                <p className="Hangman-btns">{this.generateButtons()}</p>
+              </div>
+            )}
+    
+            <button id="reset" onClick={this.resetGame}>
+              Reset Game
+            </button>
           </div>
-        ) : (
-          <div>
-            <p className="Hangman-word">{this.guessedWord()}</p>
-            <p className="Hangman-btns">{this.generateButtons()}</p>
-          </div>
-        )}
-
-        <button id="reset" onClick={this.resetGame}>
-          Reset Game
-        </button>
+        </div>
       </div>
     );
   }

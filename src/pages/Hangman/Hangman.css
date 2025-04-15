@@ -6,11 +6,26 @@
   padding: 20px;
 }
 
+.Hangman-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 40px;
+}
+
+.Hangman-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
 .Hangman img {
   border: 5px solid white;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.27),
       0 0 40px rgba(0, 0, 0, 0.06) inset;
   max-width: 100%; 
+  float: left;
 }
 
 .Hangman h1 {
@@ -53,7 +68,7 @@
 }
 
 #reset {
-  width: 100px; /* Increased reset button size */
+  width: 150px; 
   background-color: green;
   color: white;
   font-size: 1.2rem;
