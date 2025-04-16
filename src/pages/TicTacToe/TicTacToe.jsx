@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import './TicTacToe.css';
 import React from 'react';
 import axios from 'axios';
+import RoomPage from './RoomPage';
 
 const API_BASE_URL = 'https://game-room-api.fly.dev/api/rooms';
 
@@ -55,35 +56,14 @@ function Board({ gameState, onPlay }) {
 
 export default function Game() {
   const [roomID, setRoomID] = useState(null);
-  const [gameState, setGameState] = useState({
-    board: [
-      [null, null, null],
-      [null, null, null],
-      [null, null, null]
-    ],
-    currentPlayer: 'X',
-  });
+  const [gameState, setGameState] = useState(null);
+  const [inRoomPage, setInRoomPage] = useState(true); // Show RoomPage initially
 
-  async function createRoom() {
-    const response = await axios.post(API_BASE_URL, {
-      initialState: gameState,
-    });
-    setRoomID(response.data.roomId);
-    setGameState(response.data.gameState);
-    console.log('Room created with ID:', response.data.roomId);
-  }
-
-  async function fetchRoom() {
-    if (!roomID) return;
-    try {
-      const response = await axios.get(`${API_BASE_URL}/${roomID}`);
-      const freshGameState = JSON.parse(JSON.stringify(response.data.gameState));
-      setGameState(freshGameState);
-      console.log("Game refreshed", freshGameState);
-    } catch (error) {
-      console.error("Failed to fetch room:", error);
-    }
-  }
+  const handleRoomJoin = (id, state) => {
+    setRoomID(id);
+    setGameState(state);
+    setInRoomPage(false);
+  };
 
   async function updateRoomState(updatedState) {
     if (!roomID) return;
@@ -97,45 +77,59 @@ export default function Game() {
     updateRoomState(updatedState);
   }
 
-  async function resetGame() {
-    const confirmReset = window.confirm("Are you sure you want to reset the game?");
-    if (!confirmReset) return;
-
-    const freshState = {
-      board: [
-        [null, null, null],
-        [null, null, null],
-        [null, null, null]
-      ],
-      currentPlayer: 'X',
-    };
-    setGameState(freshState);
-    await updateRoomState(freshState);
+  async function fetchRoom() {
+    if (!roomID) return;
+    const response = await axios.get(`${API_BASE_URL}/${roomID}`);
+    setGameState(response.data.gameState);
   }
 
-  const winner = calculateWinner(gameState.board.flat());
+  async function resetGame() {
+    if (!window.confirm("Start a new room?")) return;
+    const response = await axios.post(API_BASE_URL, {
+      initialState: {
+        board: [
+          [null, null, null],
+          [null, null, null],
+          [null, null, null]
+        ],
+        currentPlayer: 'X',
+      },
+    });
+    setRoomID(response.data.roomId);
+    setGameState(response.data.gameState);
+  }
+
+  const winner = gameState ? calculateWinner(gameState.board.flat()) : null;
   const status = winner
     ? `Winner: ${winner}`
-    : `Next player: ${gameState.currentPlayer}`;
-
-  useEffect(() => {
-    createRoom();
-  }, []);
+    : gameState
+      ? `Next player: ${gameState.currentPlayer}`
+      : "";
 
   return (
-    <div className="game">
-      <div className="game-board">
-        <div className="status">{status}</div>
-        <Board gameState={gameState} onPlay={handlePlay} />
-      </div>
-      <div className="game-info">
-        {roomID && <p>Room Code: <strong>{roomID}</strong></p>}
-        <button onClick={fetchRoom}>Refresh Game</button>
-        <button onClick={resetGame}>Reset Game</button>
-      </div>
+    <div className="game-container">
+      <h1>Tic Tac Toe</h1>
+      {inRoomPage ? (
+        <RoomPage onRoomJoin={handleRoomJoin} />
+      ) : (
+        <div className="game">
+          <div className="game-board">
+            <div className="status">{status}</div>
+            <Board gameState={gameState} onPlay={handlePlay} />
+          </div>
+          <div className="game-info">
+            <p>Room Code: <strong>{roomID}</strong></p>
+            <button onClick={fetchRoom}>Refresh Game</button>
+            <button onClick={resetGame}>Create New Room</button>
+            <button onClick={() => setInRoomPage(true)}>Back to Room Page</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+
 
 function calculateWinner(squares) {
   const lines = [
