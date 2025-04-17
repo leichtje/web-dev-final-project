@@ -57,13 +57,22 @@ function Board({ gameState, onPlay }) {
 export default function Game() {
   const [roomID, setRoomID] = useState(null);
   const [gameState, setGameState] = useState(null);
-  const [inRoomPage, setInRoomPage] = useState(true); // Show RoomPage initially
-
+  const [inRoomPage, setInRoomPage] = useState(true); 
   const handleRoomJoin = (id, state) => {
     setRoomID(id);
     setGameState(state);
     setInRoomPage(false);
   };
+  useEffect(() => {
+    if (!roomID) return;
+  
+    const interval = setInterval(() => {
+      fetchRoom();
+    }, 5000);
+  
+    return () => clearInterval(interval);
+  }, [roomID]);
+  
 
   async function updateRoomState(updatedState) {
     if (!roomID) return;
