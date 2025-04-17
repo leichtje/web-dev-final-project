@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import GameView from "../RockPaperScissors/components/GameView";
+import './RPS.css';
+import GameView from './components/GameView';
+import React from 'react'
+import { useState } from 'react';
 
-export default function RPSMain() {
-  const [inGame, setInGame] = useState(false);
-
+function RpsApp() {
   return (
     <div className="container">
       <h1 className="mainHeader">Rock Paper Scissors</h1>
-      {!inGame ? (
-        <button className="rps-button" onClick={() => setInGame(true)}>Start Game</button>
-      ) : (
-        <GameView onBack={() => setInGame(false)} />
-      )}
+      <GameView />
     </div>
   );
 }
+
+export default RpsApp;
