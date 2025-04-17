@@ -119,4 +119,5 @@ class Hangman extends Component {
   }
 }
 
+
 export default Hangman;
