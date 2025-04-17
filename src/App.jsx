@@ -13,7 +13,6 @@ import WordleGame from "./pages/Wordle/Wordle";
 import Hangman from "./pages/Hangman/App"
 
 
-
 const App = () => {
   return (
     <BrowserRouter>
