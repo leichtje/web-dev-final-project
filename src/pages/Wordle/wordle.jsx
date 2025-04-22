@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import "./style.css";
+import "./style.css"; // Add your styles here
 
 const gameConfig = {
   attempts: 6,
