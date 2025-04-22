@@ -55,15 +55,35 @@ function Board({ xIsNext, squares, onPlay }) {
 }
 
 export default function Game() {
-  const [history, setHistory] = useState([Array(9).fill(null)]);
-  const [currentMove, setCurrentMove] = useState(0);
-  const xIsNext = currentMove % 2 === 0;
-  const currentSquares = history[currentMove];
+  const [roomID, setRoomID] = useState(null);
+  const [gameState, setGameState] = useState(null);
+  const [inRoomPage, setInRoomPage] = useState(true); 
+  const handleRoomJoin = (id, state) => {
+    setRoomID(id);
+    setGameState(state);
+    setInRoomPage(false);
+  };
+  useEffect(() => {
+    if (!roomID) return;
+  
+    const interval = setInterval(() => {
+      fetchRoom();
+    }, 5000);
+  
+    return () => clearInterval(interval);
+  }, [roomID]);
+  
 
-  function handlePlay(nextSquares) {
-    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
-    setHistory(nextHistory);
-    setCurrentMove(nextHistory.length - 1);
+  async function updateRoomState(updatedState) {
+    if (!roomID) return;
+    await axios.put(`${API_BASE_URL}/${roomID}`, {
+      gameState: updatedState,
+    });
+  }
+
+  function handlePlay(updatedState) {
+    setGameState(updatedState);
+    updateRoomState(updatedState);
   }
 
   function jumpTo(nextMove) {
