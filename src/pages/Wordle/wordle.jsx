@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import "./style.css"; // Add your styles here
+import "./style.css";
 
 const gameConfig = {
   attempts: 6,
@@ -28,8 +28,6 @@ const WordleGame = () => {
     }
     fetchRandomWord();
   }, []);
-
-  // https://it3049c-hangman.fly.dev/
 
   const updateGrid = useCallback(
     (row, col, letter) => {
