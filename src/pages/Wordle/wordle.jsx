@@ -29,8 +29,6 @@ const WordleGame = () => {
     fetchRandomWord();
   }, []);
 
-  // https://it3049c-hangman.fly.dev/
-
   const updateGrid = useCallback(
     (row, col, letter) => {
       const newGrid = [...grid];
