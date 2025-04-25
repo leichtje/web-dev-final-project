@@ -122,7 +122,7 @@ body {
 
 .wordle-row {
   display: grid;
-  grid-template-columns: repeat(5, auto); /* Changed from 6 to 5 to match word length */
+  grid-template-columns: repeat(5, auto);
   gap: 8px;
   justify-content: center;
 }
