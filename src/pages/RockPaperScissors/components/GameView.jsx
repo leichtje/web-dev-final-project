@@ -7,7 +7,6 @@ const GameView = ({ roomId, gameState, setGameState }) => {
   const userName = localStorage.getItem("username");
   const [userChoice, setUserChoice] = useState("rock");
 
-  // Set yourself as player1 or player2 if not already assigned
   useEffect(() => {
     if (!gameState) return;
   
@@ -26,14 +25,14 @@ const GameView = ({ roomId, gameState, setGameState }) => {
       const updatedState = {
         ...gameState,
         players,
-        currentTurn: players.player1, // start from player1
+        currentTurn: players.player1,
       };
       updateGameState(updatedState);
     }
   }, [gameState, userName]);
   
 
-  // Poll for latest game state
+
   useEffect(() => {
     const interval = setInterval(async () => {
       const res = await fetch(`${API_BASE_URL}/${roomId}`);
@@ -103,7 +102,6 @@ const GameView = ({ roomId, gameState, setGameState }) => {
       [userName]: userChoice,
     };
   
-    // 🛠 immediately change currentTurn to the opponent after your move
     const nextPlayer = userName === gameState.players.player1
       ? gameState.players.player2
       : gameState.players.player1;
@@ -111,12 +109,11 @@ const GameView = ({ roomId, gameState, setGameState }) => {
     const updatedState = {
       ...gameState,
       moves: updatedMoves,
-      currentTurn: nextPlayer,  // 🔥 update turn immediately
+      currentTurn: nextPlayer, 
     };
   
     await updateGameState(updatedState);
   
-    // After playing, check if both players moved
     if (updatedMoves[gameState.players.player1] && updatedMoves[gameState.players.player2]) {
       revealWinner(updatedMoves);
     }
