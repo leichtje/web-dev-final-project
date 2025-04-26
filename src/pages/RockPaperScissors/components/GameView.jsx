@@ -3,15 +3,21 @@ import { useState } from "react";
 import { RockPaperScissors } from "./rps";
 import "../RPS.css";
 
-const GameView = () => {
-  const userName = localStorage.getItem("username");
+const GameView = ({roomId, gameState, gameStarted}) => {
   const [userChoice, setUserChoice] = useState("rock")
   const [userScore, setUserScore] = useState(0)
   const [cpuScore, setCpuScore] = useState(0);
   const [gameHistory, setGameHistory] = useState([]);
-  const [game] = useState(new RockPaperScissors(userName));
+  
+  const userName = localStorage.getItem("username");
+  const API_BASE_URL = 'https://game-room-api.fly.dev/api/rooms'
 
-  const playGame = () => {
+  const playGame = async () => {
+    const latest = await fetch(`${API_BASE_URL}/${roomId}`)
+    .then((response) => response.json());
+
+    const [game] = useState(new RockPaperScissors(userName));
+    
     if (!userChoice) return;
     
     const cpuSelection = game.generateCPUResponse();
