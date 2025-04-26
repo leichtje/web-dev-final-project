@@ -18,7 +18,7 @@ function RpsApp() {
   return (
     <div className="container">
       <h1 className="mainHeader">Rock Paper Scissors</h1>
-        {gameStarted ? (<GameView roomId = {roomId} gameState = {gameState} gameStarted = {gameStarted}/>
+        {gameStarted ? (<GameView roomId = {roomId} gameState = {gameState} gameStarted = {gameStarted} setGameState={setGameState}/>
         ) : (
       <RoomPage onRoomJoin={handleRoomJoin}/>)}
     </div>
