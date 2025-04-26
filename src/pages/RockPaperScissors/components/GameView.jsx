@@ -53,30 +53,76 @@ const GameView = ({ roomId, gameState, setGameState }) => {
     setGameState(updatedState);
   };
 
-  const handlePlay = async () => {
-    if (!gameState.currentTurn || gameState.currentTurn !== userName) {
-      alert("It's not your turn!");
-      return;
+  const revealWinner = async (moves) => {
+    const [p1, p2] = [gameState.players.player1, gameState.players.player2];
+    const move1 = moves[p1];
+    const move2 = moves[p2];
+    let result = "";
+  
+    if (move1 === move2) {
+      result = "It's a Tie!";
+    } else if (
+      (move1 === "rock" && move2 === "scissors") ||
+      (move1 === "paper" && move2 === "rock") ||
+      (move1 === "scissors" && move2 === "paper")
+    ) {
+      result = `${p1} wins!`;
+    } else {
+      result = `${p2} wins!`;
     }
-
-    const nextPlayer =
-      gameState.players.player1 === userName
-        ? gameState.players.player2
-        : gameState.players.player1;
-
+  
     const newHistory = [
       ...(gameState.history || []),
-      `${userName} chose ${userChoice}`,
+      `${p1} chose ${move1}, ${p2} chose ${move2}. ${result}`
     ];
+  
+    const resetState = {
+      ...gameState,
+      moves: {},
+      history: newHistory,
+      currentTurn: gameState.currentTurn === p1 ? p2 : p1
+    };
+  
+    await updateGameState(resetState);
+  };
+  
 
+  const handlePlay = async () => {
+    if (!gameState.players || !gameState.players.player1 || !gameState.players.player2) {
+      alert("Waiting for another player...");
+      return;
+    }
+  
+    if (gameState.moves?.[userName]) {
+      alert("You already made your move. Wait for the other player!");
+      return;
+    }
+  
+    const updatedMoves = {
+      ...(gameState.moves || {}),
+      [userName]: userChoice,
+    };
+  
+    // 🛠 immediately change currentTurn to the opponent after your move
+    const nextPlayer = userName === gameState.players.player1
+      ? gameState.players.player2
+      : gameState.players.player1;
+  
     const updatedState = {
       ...gameState,
-      currentTurn: nextPlayer,
-      history: newHistory,
+      moves: updatedMoves,
+      currentTurn: nextPlayer,  // 🔥 update turn immediately
     };
-
+  
     await updateGameState(updatedState);
+  
+    // After playing, check if both players moved
+    if (updatedMoves[gameState.players.player1] && updatedMoves[gameState.players.player2]) {
+      revealWinner(updatedMoves);
+    }
   };
+  
+  
 
   return (
     <div id="game-screen" style={{ border: `1px solid black`, padding: "1rem" }}>
